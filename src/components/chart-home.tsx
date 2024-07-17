@@ -32,7 +32,7 @@ const chartConfig = {
     color: "hsl(var(--chart-3))",
   },
   edge: {
-    label: "GitHub Pages",
+    label: "GitHub",
     color: "hsl(var(--chart-4))",
   },
   other: {
@@ -45,7 +45,10 @@ export function ChartHome() {
   return (
     <>
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-[200px] max-w-96">
+        <ChartContainer
+          config={chartConfig}
+          className="min-h-[200px] w-96 px-4 sm:w-[600px]"
+        >
           <LineChart
             accessibilityLayer
             data={chartData}
@@ -93,8 +96,8 @@ export function ChartHome() {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="leading-none text-muted-foreground">
-          Project deployment popularity- Source OpenAI
+        <div className="leading-none text-center text-muted-foreground">
+          Project deployment popularity- Source OpenAI prompt.
         </div>
       </CardFooter>
     </>

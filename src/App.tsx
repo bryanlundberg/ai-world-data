@@ -10,7 +10,7 @@ function App() {
     <>
       <div className="min-h-screen">
         <Navbar />
-        <div className="flex flex-col items-center justify-center mt-24">
+        <div className="flex flex-col items-center justify-center mt-20">
           <Slogan />
           <div className="my-10"></div>
           <ChartHome />

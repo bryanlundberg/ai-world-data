@@ -1,7 +1,7 @@
 export default function Slogan() {
   return (
     <>
-      <h2 className="pb-2 text-3xl font-semibold tracking-tight border-b scroll-m-20 first:mt-0">
+      <h2 className="w-10/12 pb-2 text-3xl font-semibold tracking-tight text-center scroll-m-20 first:mt-0 lg:text-7xl md:text-5xl">
         Explore worldwide information
       </h2>
 

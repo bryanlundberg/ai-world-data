@@ -1,14 +1,22 @@
 import { GithubIcon } from "lucide-react";
 import Logo from "./logo";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar() {
   return (
     <>
-      <div className="flex justify-between h-10 px-3 py-3">
+      <nav className="flex justify-between w-full h-10 px-3 py-3 mx-auto mb-3 max-w-screen-2xl">
         <Logo />
 
         <div className="flex gap-3">
-          <div>Playground</div>
+          <NavLink
+            to={"/playground"}
+            className={({ isActive, isPending }) =>
+              isPending ? "" : isActive ? "underline" : ""
+            }
+          >
+            Playground
+          </NavLink>
           <a
             href="https://github.com/bryanlundberg/ai-world-data"
             target="_blank"
@@ -18,7 +26,7 @@ export default function Navbar() {
             </div>
           </a>
         </div>
-      </div>
+      </nav>
     </>
   );
 }

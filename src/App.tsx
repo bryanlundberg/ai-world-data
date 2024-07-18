@@ -16,7 +16,7 @@ function App() {
           <ChartHome />
 
           <Button>
-            <Lightbulb className="w-4 h-4 mr-2" /> Explore more!
+            <Lightbulb className="w-4 h-4 mr-2" /> Go playground
           </Button>
         </div>
 

@@ -1,7 +1,8 @@
-import { GenChart } from "./gen-chart";
-import Navbar from "./navbar";
-import { Card, CardContent, CardDescription } from "./ui/card";
-import { Label } from "./ui/label";
+"use client";
+import { GenChart } from "@/components/gen-chart";
+import Navbar from "@/components/navbar";
+import { Card, CardDescription } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -10,8 +11,18 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "@/components/ui/select";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { nouns } from "@/data/nouns";
+import { locations } from "@/data/locations";
+import { Lock } from "lucide-react";
+
+import useAISettings from "@/hooks/useAISettings";
+import usePromptSettings from "@/hooks/usePromptSettings";
+import useGenerateObject from "@/hooks/useGenerateObject";
+import { setKey } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -19,18 +30,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { nouns } from "@/data/nouns";
-import { locations } from "@/data/locations";
-import { Lock } from "lucide-react";
-
-import useAISettings from "@/hooks/useAISettings";
-import { AIProviders, Models } from "@/ts/Types";
-import { AII } from "@/ts/Interfaces";
-import { getKey, setKey } from "@/lib/utils";
-import usePromptSettings from "@/hooks/usePromptSettings";
+} from "@/components/ui/dialog";
 
 export default function Playground() {
   // const [promptSettings, setPromptSettings] = useState({
@@ -44,6 +44,8 @@ export default function Playground() {
     useAISettings();
   const { promptSettings, handlePrompt, setPromptSettings } =
     usePromptSettings();
+
+  // useGenerateObject();
 
   return (
     <>
@@ -137,7 +139,7 @@ export default function Playground() {
               >
                 <Label htmlFor="">Metadata 1:</Label>
                 <Select
-                  onValueChange={(e) =>
+                  onValueChange={(e: any) =>
                     setPromptSettings((data) => ({ ...data, metadata1: e }))
                   }
                 >
@@ -160,7 +162,7 @@ export default function Playground() {
 
                 <Label htmlFor="">Comparison (with):</Label>
                 <Select
-                  onValueChange={(e) =>
+                  onValueChange={(e: any) =>
                     setPromptSettings((data) => ({ ...data, comparison: e }))
                   }
                   defaultValue="most"
@@ -176,7 +178,7 @@ export default function Playground() {
 
                 <Label htmlFor="">Metadata 2:</Label>
                 <Select
-                  onValueChange={(e) =>
+                  onValueChange={(e: any) =>
                     setPromptSettings((data) => ({ ...data, metadata2: e }))
                   }
                 >
@@ -200,7 +202,7 @@ export default function Playground() {
                 <Label htmlFor="">Dataset size:</Label>
                 <Select
                   defaultValue="5"
-                  onValueChange={(e) =>
+                  onValueChange={(e: any) =>
                     setPromptSettings((data) => ({ ...data, size: e }))
                   }
                 >

@@ -1,7 +1,7 @@
 export type Models =
-  | "gemini-10-pro"
-  | "gemini-15-flash"
-  | "gemini-15-pro"
+  | "gemini-1.0-pro"
+  | "gemini-1.5-flash"
+  | "gemini-1.5-pro"
   | "gemini-227b"
   | "gemini-29b";
 

@@ -21,7 +21,7 @@ import { Lock } from "lucide-react";
 
 import useAISettings from "@/hooks/useAISettings";
 import usePromptSettings from "@/hooks/usePromptSettings";
-import useGenerateObject from "@/hooks/useGenerateObject";
+
 import { setKey } from "@/lib/utils";
 import {
   Dialog,
@@ -31,21 +31,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useEffect, useState } from "react";
+import { generateGoogleResponse } from "@/lib/generateGoogleResponse";
 
 export default function Playground() {
-  // const [promptSettings, setPromptSettings] = useState({
-  //   metadata1: undefined,
-  //   comparison: undefined,
-  //   metadata2: undefined,
-  //   dataSetSize: 5,
-  // });
-
   const { AISettings, handleChangeKey, handleChangeModel, googleProviderKey } =
     useAISettings();
   const { promptSettings, handlePrompt, setPromptSettings } =
     usePromptSettings();
 
-  // useGenerateObject();
+  const [data, setData] = useState<any>([]);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <>
@@ -65,7 +64,10 @@ export default function Playground() {
               <div className="flex flex-col gap-3 mt-3 ">
                 {/* IA model */}
                 <Label htmlFor="model">Model</Label>
-                <Select defaultValue={AISettings.model}>
+                <Select
+                  defaultValue={AISettings.model}
+                  onValueChange={(e) => handleChangeModel(e as any)}
+                >
                   <SelectTrigger id="model" className="w-full">
                     <SelectValue placeholder="Choose a model" />
                   </SelectTrigger>
@@ -225,6 +227,19 @@ export default function Playground() {
                     promptSettings.metadata1 === "" ||
                     promptSettings.metadata2 === ""
                   }
+                  onClick={async () => {
+                    const response = await generateGoogleResponse({
+                      apiKey:
+                        window.localStorage.getItem("google-generative") || "",
+                      model: AISettings.model || "gemini-1.5-pro",
+                      metadata1: promptSettings.metadata1,
+                      comparison: promptSettings.comparison,
+                      metadata2: promptSettings.metadata2,
+                      length: promptSettings.size,
+                    });
+
+                    setData([...response]);
+                  }}
                 >
                   Launch
                 </Button>

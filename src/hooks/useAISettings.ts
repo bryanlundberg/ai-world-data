@@ -1,5 +1,6 @@
+import { ai } from "@/data/ai";
 import { AISettings } from "@/ts/Interfaces";
-import { AIProviders, Models } from "@/ts/Types";
+import { Models } from "@/ts/Types";
 import { useEffect, useState } from "react";
 
 export default function useAISettings() {
@@ -11,7 +12,15 @@ export default function useAISettings() {
   });
 
   const handleChangeModel = (model: Models) => {
-    setAISettings({ ...AISettings, model: model });
+    ai.forEach((item) => {
+      if (item.model === model) {
+        return setAISettings({
+          ...AISettings,
+          model: model,
+          provider: item.provider,
+        });
+      }
+    });
   };
 
   const handleChangeKey = (newKey: string) => {
@@ -19,10 +28,13 @@ export default function useAISettings() {
   };
 
   useEffect(() => {
-    setAISettings({
-      ...AISettings,
-    });
+    setGoogleProviderKey(
+      window.localStorage.getItem("google-generative") || ""
+    );
   }, []);
+  useEffect(() => {
+    console.log(AISettings);
+  }, [AISettings]);
 
   return {
     AISettings,

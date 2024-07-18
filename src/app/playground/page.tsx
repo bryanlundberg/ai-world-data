@@ -34,6 +34,7 @@ import {
 import { useEffect, useState } from "react";
 import { generateGoogleResponse } from "@/lib/generateGoogleResponse";
 import LoadingChart from "@/components/loading-chart";
+import ChartHoldingState from "@/components/chart-holding-state";
 
 export default function Playground() {
   const { AISettings, handleChangeKey, handleChangeModel, googleProviderKey } =
@@ -55,7 +56,8 @@ export default function Playground() {
         <div className="flex w-full max-w-screen-xl gap-3 p-3 mx-auto">
           {/* ChartZone */}
           <Card className="w-full h-full">
-            <LoadingChart />
+            <ChartHoldingState />
+            {/* <LoadingChart /> */}
             {/* <GenChart /> */}
           </Card>
           {/* Options */}

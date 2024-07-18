@@ -28,7 +28,7 @@ export async function generateGoogleResponse({
     const { text } = await generateText({
       model: google(model),
       prompt: `${metadata1} ${comparison} ${metadata2}`,
-      system: `always generate only an array, based on most realistic information in case you don't have it complete fields. Its necessary that it has a length of ${length}. Result must follow this structure javascript Object: {key: String, value: Number, units: String (relation or measure units) }. Finally don't include any kind of other text characters.`,
+      system: `always generate only an array, based on most realistic information in case you don't have it complete fields. Its necessary that it has a length of ${length}. Result must follow this structure javascript Object: {key: String, value: Number (complete number, e.g: 1000000 not 1M or similar), units: String (relation, e.g: Countries most millionaires - relationship it's people) }. Finally don't include any kind of other text characters.`,
     });
 
     console.log(text);

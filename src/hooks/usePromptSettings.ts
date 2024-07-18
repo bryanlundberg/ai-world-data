@@ -4,8 +4,8 @@ export default function usePromptSettings() {
   const [promptSettings, setPromptSettings] = useState({
     metadata1: "",
     metadata2: "",
-    comparison: "",
-    size: "",
+    comparison: "most",
+    size: "5",
   });
 
   const handlePrompt = async () => {};

@@ -1,7 +1,14 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, XAxis, YAxis } from "recharts";
+import { Gem, TrendingUp } from "lucide-react";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from "recharts";
 
 import {
   Card,
@@ -19,36 +26,40 @@ import {
 } from "@/components/ui/chart";
 
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
+  { browser: "chrome", visitors: 27543325, fill: "var(--color-chrome)" },
+  { browser: "safari", visitors: 2043240, fill: "var(--color-safari)" },
+  { browser: "firefox", visitors: 1852537, fill: "var(--color-firefox)" },
+  { browser: "edge", visitors: 17221433, fill: "var(--color-edge)" },
+  { browser: "other", visitors: 9412650, fill: "var(--color-other)" },
 ];
 
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
+const data = [
+  { key: "United States", value: 2200000, units: "people" },
+  { key: "China", value: 6980000, units: "people" },
+  { key: "Japan", value: 3650000, units: "people" },
+  { key: "Germany", value: 2760000, units: "people" },
+  { key: "United Kingdom", value: 2500000, units: "people" },
+  { key: "France", value: 2400000, units: "people" },
+  { key: "India", value: 2360000, units: "people" },
+  { key: "Canada", value: 1800000, units: "people" },
+  { key: "Italy", value: 1700000, units: "people" },
+  { key: "Australia", value: 1400000, units: "people" },
+  { key: "South Korea", value: 930000, units: "people" },
+  { key: "Spain", value: 928000, units: "people" },
+  { key: "Russia", value: 900000, units: "people" },
+  { key: "Switzerland", value: 780000, units: "people" },
+  { key: "Netherlands", value: 750000, units: "people" },
+  { key: "Brazil", value: 680000, units: "people" },
+  { key: "Taiwan", value: 600000, units: "people" },
+  { key: "Saudi Arabia", value: 590000, units: "people" },
+  { key: "Sweden", value: 450000, units: "people" },
+  { key: "Hong Kong", value: 550000, units: "people" },
+];
+
+const chartConfig2 = {
+  value: {
+    label: "#",
+    // color: "#60a5fa",
   },
 };
 
@@ -56,46 +67,47 @@ export function GenChart() {
   return (
     <>
       <CardHeader>
-        <CardTitle></CardTitle>
-        <CardDescription>2024</CardDescription>
+        <CardTitle>Countries with most people - 2024</CardTitle>
+        <CardDescription className="flex items-center gap-1">
+          <Gem size={12} /> Generated with Gemini-1.5-pro
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig2}>
           <BarChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             layout="vertical"
             margin={{
               left: 0,
             }}
           >
+            <CartesianGrid horizontal={false} />
             <YAxis
-              dataKey="browser"
+              dataKey="key"
               type="category"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) =>
-                chartConfig[value as keyof typeof chartConfig]?.label
-              }
+              tickFormatter={(value) => value.slice(0, 3)}
             />
-            <XAxis dataKey="visitors" type="number" hide />
+            <XAxis dataKey="value" type="number" hide />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={<ChartTooltipContent indicator="line" />}
             />
-            <Bar dataKey="visitors" layout="vertical" radius={5} />
+            <Bar dataKey="value" layout="vertical" fill="#9e9e9e" radius={5}>
+              <LabelList
+                dataKey="key"
+                position="insideLeft"
+                offset={8}
+                className="fill-[--color-label]"
+                fontSize={12}
+              />
+            </Bar>
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="w-4 h-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
     </>
   );
 }

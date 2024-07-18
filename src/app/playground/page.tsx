@@ -1,5 +1,5 @@
 "use client";
-import { GenChart } from "@/components/gen-chart";
+
 import Navbar from "@/components/navbar";
 import { Card, CardDescription } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
 import { generateGoogleResponse } from "@/lib/generateGoogleResponse";
+import LoadingChart from "@/components/loading-chart";
 
 export default function Playground() {
   const { AISettings, handleChangeKey, handleChangeModel, googleProviderKey } =
@@ -54,7 +55,8 @@ export default function Playground() {
         <div className="flex w-full max-w-screen-xl gap-3 p-3 mx-auto">
           {/* ChartZone */}
           <Card className="w-full h-full">
-            <GenChart />
+            <LoadingChart />
+            {/* <GenChart /> */}
           </Card>
           {/* Options */}
 
@@ -167,7 +169,7 @@ export default function Playground() {
                   onValueChange={(e: any) =>
                     setPromptSettings((data) => ({ ...data, comparison: e }))
                   }
-                  defaultValue="most"
+                  defaultValue={promptSettings.comparison}
                 >
                   <SelectTrigger className="w-full">
                     <SelectValue id="comparison" />
@@ -203,7 +205,7 @@ export default function Playground() {
 
                 <Label htmlFor="">Dataset size:</Label>
                 <Select
-                  defaultValue="5"
+                  defaultValue={promptSettings.size}
                   onValueChange={(e: any) =>
                     setPromptSettings((data) => ({ ...data, size: e }))
                   }

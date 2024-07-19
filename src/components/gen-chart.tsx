@@ -1,6 +1,6 @@
 "use client";
 
-import { Gem, TrendingUp } from "lucide-react";
+import { Gem } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -11,43 +11,30 @@ import {
 } from "recharts";
 
 import {
-  Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { AIPromptSettings, AISettings } from "@/ts/Interfaces";
+import { Separator } from "./ui/separator";
+import { Checkbox } from "./ui/checkbox";
 
-// const data = [
-//   { key: "United States", value: 2200000, units: "people" },
-//   { key: "China", value: 6980000, units: "people" },
-//   { key: "Japan", value: 3650000, units: "people" },
-//   { key: "Germany", value: 2760000, units: "people" },
-//   { key: "United Kingdom", value: 2500000, units: "people" },
-//   { key: "France", value: 2400000, units: "people" },
-//   { key: "India", value: 2360000, units: "people" },
-//   { key: "Canada", value: 1800000, units: "people" },
-//   { key: "Italy", value: 1700000, units: "people" },
-//   { key: "Australia", value: 1400000, units: "people" },
-//   { key: "South Korea", value: 930000, units: "people" },
-//   { key: "Spain", value: 928000, units: "people" },
-//   { key: "Russia", value: 900000, units: "people" },
-//   { key: "Switzerland", value: 780000, units: "people" },
-//   { key: "Netherlands", value: 750000, units: "people" },
-//   { key: "Brazil", value: 680000, units: "people" },
-//   { key: "Taiwan", value: 600000, units: "people" },
-//   { key: "Saudi Arabia", value: 590000, units: "people" },
-//   { key: "Sweden", value: 450000, units: "people" },
-//   { key: "Hong Kong", value: 550000, units: "people" },
-// ];
+import { Button } from "./ui/button";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { useState } from "react";
 
 interface data {
   key: string;
@@ -70,6 +57,12 @@ export function GenChart({
   promptSettings: AIPromptSettings;
   aiSettings: AISettings;
 }) {
+  const [config, setConfig] = useState({
+    hideXAxis: true,
+    hideYAxis: false,
+    labels: false,
+  });
+
   return (
     <>
       <CardHeader>
@@ -99,25 +92,105 @@ export function GenChart({
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value.slice(0, 7)}
+              hide={config.hideYAxis}
             />
-            <XAxis dataKey="value" type="number" hide />
+            <XAxis dataKey="value" type="number" hide={config.hideXAxis} />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
             <Bar dataKey="value" layout="vertical" fill="#BCBCBD" radius={5}>
-              <LabelList
-                dataKey="key"
-                position="insideLeft"
-                offset={8}
-                className="fill-[--color-label]"
-                fontSize={12}
-              />
+              {config.labels && (
+                <LabelList
+                  dataKey="key"
+                  position="insideLeft"
+                  offset={8}
+                  className="fill-[--color-label]"
+                  fontSize={12}
+                />
+              )}
             </Bar>
           </BarChart>
         </ChartContainer>
+
+        <CardDescription className="mt-14 mb-3 flex items-end justify-between">
+          <p>Style options</p>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">View data</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>RAW JSON</DialogTitle>
+              </DialogHeader>
+
+              <pre className="bg-black w-full p-5 text-xs overflow-y-auto max-h-96">
+                {JSON.stringify(data, null, 2)}
+              </pre>
+            </DialogContent>
+          </Dialog>
+        </CardDescription>
+        <Separator className=" mb-5" />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <CheckboxChartOption
+            onClick={() =>
+              setConfig((config) => ({
+                ...config,
+                hideXAxis: !config.hideXAxis,
+              }))
+            }
+            defaultChecked={config.hideXAxis}
+            id="show-x-axis"
+            title="Hide X Axis Scale"
+            description="Remove reference on the Y axis."
+          />
+          <CheckboxChartOption
+            onClick={() =>
+              setConfig((config) => ({
+                ...config,
+                hideYAxis: !config.hideYAxis,
+              }))
+            }
+            defaultChecked={config.hideYAxis}
+            id="show-y-axis"
+            title="Hide Y Axis Scale"
+            description="Remove reference on the Y axis."
+          />
+          <CheckboxChartOption
+            onClick={() =>
+              setConfig((config) => ({
+                ...config,
+                labels: !config.labels,
+              }))
+            }
+            defaultChecked={config.labels}
+            id="show-labels"
+            title="Hide labels"
+            description="Removes the names displayed on the bars."
+          />
+        </div>
       </CardContent>
+    </>
+  );
+}
+
+function CheckboxChartOption({ title, description, id, ...rest }: any) {
+  return (
+    <>
+      <div className="items-top flex space-x-2">
+        <Checkbox id={id} {...rest} />
+        <div className="grid gap-1.5 leading-none">
+          <label
+            htmlFor={id}
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            {title}
+          </label>
+          <p className="text-sm text-muted-foreground">{description}</p>
+        </div>
+      </div>
     </>
   );
 }

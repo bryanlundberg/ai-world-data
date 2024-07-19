@@ -80,7 +80,7 @@ export default function Playground() {
 
           <div>
             <Card className="p-3 h-fit w-96">
-              <CardDescription>IA Settings</CardDescription>
+              <CardDescription>IA settings</CardDescription>
               <div className="flex flex-col gap-3 mt-3 ">
                 {/* IA model */}
                 <Label htmlFor="model">Model</Label>

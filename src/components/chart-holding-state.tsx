@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function ChartHoldingState() {
   return (
     <>
-      <div className="h-96 flex flex-col gap-3 items-center justify-center bg-transparent bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]">
+      <div className="h-96 flex flex-col gap-3 items-center justify-center bg-transparent bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:48px_48px] glowing-effect">
         <Image
           src={"/vercel-logotype-dark.png"}
           alt="vercel-logotype-dark"

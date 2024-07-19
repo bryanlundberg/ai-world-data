@@ -35,6 +35,9 @@ import { useEffect, useState } from "react";
 import { generateGoogleResponse } from "@/lib/generateGoogleResponse";
 import LoadingChart from "@/components/loading-chart";
 import ChartHoldingState from "@/components/chart-holding-state";
+import { GenChart } from "@/components/gen-chart";
+import { useToast } from "@/components/ui/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 export default function Playground() {
   const { AISettings, handleChangeKey, handleChangeModel, googleProviderKey } =
@@ -43,6 +46,10 @@ export default function Playground() {
     usePromptSettings();
 
   const [data, setData] = useState<any>([]);
+
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     console.log(data);
@@ -56,9 +63,16 @@ export default function Playground() {
         <div className="flex w-full max-w-screen-xl gap-3 p-3 mx-auto">
           {/* ChartZone */}
           <Card className="w-full h-full">
-            <ChartHoldingState />
-            {/* <LoadingChart /> */}
-            {/* <GenChart /> */}
+            {/* If its loading */}
+            {isLoading ? (
+              <LoadingChart />
+            ) : // If theres not data
+            !data || data.length === 0 ? (
+              <ChartHoldingState />
+            ) : (
+              // If there are data
+              <GenChart data={data} />
+            )}
           </Card>
           {/* Options */}
 
@@ -232,17 +246,39 @@ export default function Playground() {
                     promptSettings.metadata2 === ""
                   }
                   onClick={async () => {
-                    const response = await generateGoogleResponse({
-                      apiKey:
-                        window.localStorage.getItem("google-generative") || "",
-                      model: AISettings.model || "gemini-1.5-pro",
-                      metadata1: promptSettings.metadata1,
-                      comparison: promptSettings.comparison,
-                      metadata2: promptSettings.metadata2,
-                      length: promptSettings.size,
-                    });
+                    try {
+                      setIsLoading(true);
+                      const response = await generateGoogleResponse({
+                        apiKey:
+                          window.localStorage.getItem("google-generative") ||
+                          "",
+                        model: AISettings.model || "gemini-1.5-pro",
+                        metadata1: promptSettings.metadata1,
+                        comparison: promptSettings.comparison,
+                        metadata2: promptSettings.metadata2,
+                        length: promptSettings.size,
+                      });
 
-                    setData([...response]);
+                      if (response) {
+                        setData([...response]);
+                      }
+                    } catch (error) {
+                      if (error instanceof Error) {
+                        toast({
+                          variant: "destructive",
+                          title: "Uh oh! Something went wrong.",
+                          description: error.message,
+                        });
+                      } else {
+                        toast({
+                          variant: "destructive",
+                          title: "Uh oh! Something went wrong.",
+                          description: "An unknown error occurred.",
+                        });
+                      }
+                    } finally {
+                      setIsLoading(false);
+                    }
                   }}
                 >
                   Launch

@@ -125,7 +125,7 @@ export function GenChart({
                 <DialogTitle>RAW JSON</DialogTitle>
               </DialogHeader>
 
-              <pre className="bg-black w-full p-5 text-xs overflow-y-auto max-h-96">
+              <pre className="dark:bg-black bg-neutral-100 w-full p-5 text-xs overflow-y-auto max-h-96">
                 {JSON.stringify(data, null, 2)}
               </pre>
             </DialogContent>

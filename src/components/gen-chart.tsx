@@ -115,7 +115,7 @@ export function GenChart({
         </ChartContainer>
 
         <CardDescription className="mt-14 mb-3 flex items-end justify-between">
-          <p>Style options</p>
+          <p>Appearance</p>
           <Dialog>
             <DialogTrigger asChild>
               <Button variant="outline">View data</Button>

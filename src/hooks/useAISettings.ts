@@ -7,7 +7,7 @@ export default function useAISettings() {
   const [googleProviderKey, setGoogleProviderKey] = useState("");
 
   const [AISettings, setAISettings] = useState<AISettings>({
-    model: undefined,
+    model: "gemini-1.5-pro",
     provider: undefined,
   });
 

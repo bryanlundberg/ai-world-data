@@ -24,6 +24,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { AIPromptSettings, AISettings } from "@/ts/Interfaces";
 
 // const data = [
 //   { key: "United States", value: 2200000, units: "people" },
@@ -61,16 +62,24 @@ export function GenChart({
       label: "#",
     },
   },
+  promptSettings,
+  aiSettings,
 }: {
   data: data[];
   chartConfigs?: any; // :V
+  promptSettings: AIPromptSettings;
+  aiSettings: AISettings;
 }) {
   return (
     <>
       <CardHeader>
-        <CardTitle>Countries with most people - 2024</CardTitle>
+        <CardTitle>
+          {promptSettings.metadata1.charAt(0).toUpperCase() +
+            promptSettings.metadata1.slice(1)}{" "}
+          with {promptSettings.comparison} {promptSettings.metadata2} - 2024
+        </CardTitle>
         <CardDescription className="flex items-center gap-1">
-          <Gem size={12} /> Generated with Gemini-1.5-pro
+          <Gem size={12} /> Generated with {aiSettings.model}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -97,7 +106,7 @@ export function GenChart({
               cursor={false}
               content={<ChartTooltipContent indicator="line" />}
             />
-            <Bar dataKey="value" layout="vertical" fill="#9e9e9e" radius={5}>
+            <Bar dataKey="value" layout="vertical" fill="#BCBCBD" radius={5}>
               <LabelList
                 dataKey="key"
                 position="insideLeft"

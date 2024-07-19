@@ -37,13 +37,11 @@ import LoadingChart from "@/components/loading-chart";
 import ChartHoldingState from "@/components/chart-holding-state";
 import { GenChart } from "@/components/gen-chart";
 import { useToast } from "@/components/ui/use-toast";
-import { ToastAction } from "@/components/ui/toast";
 
 export default function Playground() {
   const { AISettings, handleChangeKey, handleChangeModel, googleProviderKey } =
     useAISettings();
-  const { promptSettings, handlePrompt, setPromptSettings } =
-    usePromptSettings();
+  const { promptSettings, setPromptSettings } = usePromptSettings();
 
   const [data, setData] = useState<any>([]);
 
@@ -71,7 +69,11 @@ export default function Playground() {
               <ChartHoldingState />
             ) : (
               // If there are data
-              <GenChart data={data} />
+              <GenChart
+                data={data}
+                promptSettings={promptSettings}
+                aiSettings={AISettings}
+              />
             )}
           </Card>
           {/* Options */}
@@ -92,13 +94,13 @@ export default function Playground() {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Google generative</SelectLabel>
-                      <SelectItem value={"gemini-10-pro"}>
+                      <SelectItem value={"gemini-1.0-pro"}>
                         Gemini 1.0 Pro{" "}
                       </SelectItem>
-                      <SelectItem value="gemini-15-flash">
+                      <SelectItem value="gemini-1.5-flash">
                         Gemini 1.5 Flash{" "}
                       </SelectItem>
-                      <SelectItem value="gemini-15-pro">
+                      <SelectItem value="gemini-1.5-pro">
                         Gemini 1.5 Pro{" "}
                       </SelectItem>
                       <SelectItem value="gemini-227b" disabled>
@@ -153,7 +155,6 @@ export default function Playground() {
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  handlePrompt();
                 }}
                 className="flex flex-col gap-3 mt-3 "
               >
@@ -192,7 +193,7 @@ export default function Playground() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={"most"}>Most</SelectItem>
-                    <SelectItem value={"least"}>Least</SelectItem>
+                    <SelectItem value={"fewer"}>Fewer</SelectItem>
                   </SelectContent>
                 </Select>
 

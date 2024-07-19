@@ -1,22 +1,16 @@
-import { useEffect, useState } from "react";
+import { AIPromptSettings } from "@/ts/Interfaces";
+import { useState } from "react";
 
 export default function usePromptSettings() {
-  const [promptSettings, setPromptSettings] = useState({
+  const [promptSettings, setPromptSettings] = useState<AIPromptSettings>({
     metadata1: "",
     metadata2: "",
     comparison: "most",
     size: "5",
   });
 
-  const handlePrompt = async () => {};
-
-  useEffect(() => {
-    console.log(promptSettings);
-  }, [promptSettings]);
-
   return {
     promptSettings,
-    handlePrompt,
     setPromptSettings,
   };
 }

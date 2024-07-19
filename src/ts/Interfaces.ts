@@ -5,6 +5,13 @@ export interface AISettings {
   provider: AIProviders;
 }
 
+export interface AIPromptSettings {
+  metadata1: string;
+  metadata2: string;
+  comparison: string;
+  size: string;
+}
+
 export interface AII {
   model: Models;
   provider: AIProviders;

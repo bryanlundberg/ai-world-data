@@ -94,8 +94,9 @@ export default function Playground() {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Google generative</SelectLabel>
-                      <SelectItem value={"gemini-1.0-pro"}>
-                        Gemini 1.0 Pro{" "}
+                      <SelectItem value={"gemini-1.0-pro"} disabled>
+                        <Lock className="inline w-3 h-3 mb-1"></Lock> Gemini 1.0
+                        Pro{" "}
                       </SelectItem>
                       <SelectItem value="gemini-1.5-flash">
                         Gemini 1.5 Flash{" "}

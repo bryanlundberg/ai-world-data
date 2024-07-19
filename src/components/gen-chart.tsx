@@ -167,8 +167,8 @@ export function GenChart({
             }
             defaultChecked={config.labels}
             id="show-labels"
-            title="Hide labels"
-            description="Removes the names displayed on the bars."
+            title="Show labels"
+            description="Display the names inside the bars."
           />
         </div>
       </CardContent>

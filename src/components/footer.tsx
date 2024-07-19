@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "./ui/button";
 
 export default function Footer() {
@@ -5,9 +6,13 @@ export default function Footer() {
     <>
       <div className="flex items-center justify-center my-10">
         Made with ❤️ by{" "}
-        <span>
+        <Link
+          href={"https://github.com/bryanlundberg"}
+          target="_blank"
+          draggable={false}
+        >
           <Button variant="link">Bryan</Button>
-        </span>
+        </Link>
       </div>
     </>
   );

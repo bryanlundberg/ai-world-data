@@ -11,7 +11,15 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <div className="min-h-screen">
+      <div
+        className="min-h-screen"
+        style={{
+          backgroundImage: `url('./grid.svg')`,
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+        }}
+      >
         <Navbar />
         <div className="flex flex-col items-center justify-center mt-20">
           <Slogan />
@@ -19,9 +27,7 @@ export default function Home() {
           <ChartHome />
 
           <Link href={"/playground"}>
-            <Button>
-              <Lightbulb className="w-4 h-4 mr-2" /> Go playground
-            </Button>
+            <Button>Get started</Button>
           </Link>
         </div>
         <Footer />

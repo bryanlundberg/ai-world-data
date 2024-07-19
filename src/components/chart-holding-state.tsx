@@ -9,7 +9,8 @@ export default function ChartHoldingState() {
           alt="vercel-logotype-dark"
           width={500}
           height={200}
-          className="px-3 dark:invert"
+          className="px-3 dark:invert select-none"
+          draggable={false}
         />
         <p className="font-semibold text-lg opacity-70">
           Summer Hackathon 2024 Submission

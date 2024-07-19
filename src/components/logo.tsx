@@ -5,7 +5,7 @@ export default function Logo() {
   return (
     <>
       <div className="text-md font-extrabold tracking-tight select-none scroll-m-20 flex items-center justify-start gap-1">
-        <Link href={"/"}>
+        <Link href={"/"} draggable={false}>
           <span className="p-1 px-2 text-2xl text-white bg-black rounded-md max-w-10 dark:bg-white dark:text-black me-2">
             AI
           </span>
@@ -19,6 +19,7 @@ export default function Logo() {
               width={20}
               height={20}
               className="inline-block w-6 h-6 mb-1 select-none"
+              draggable={false}
             />
             <span>RLD</span>
           </div>

@@ -14,6 +14,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           <Link
+            draggable={false}
             href="/playground"
             className={`light:text-black light:text-white transition duration-300 ${
               pathname === "/playground"

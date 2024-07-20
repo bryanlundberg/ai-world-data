@@ -10,6 +10,7 @@ export type Models =
   | "gpt-3.5-turbo"
   | "gpt-4"
   | "gpt-4-turbo"
-  | "gpt-4o";
+  | "gpt-4o"
+  | undefined;
 
 export type AIProviders = "google-generative" | "groq" | "openai" | undefined;

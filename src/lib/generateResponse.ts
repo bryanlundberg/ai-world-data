@@ -35,7 +35,7 @@ export async function generateResponse({
 
     let response = "";
 
-    const systemMessage = `always generate only an array, based on most realistic information in case you don't have it complete fields. Its necessary that it has a length of ${length}. Result must follow this structure JSON object: {key: String, value: Number (complete number, e.g: 1000000 not 1M or similar), units: String (relation, e.g: Countries most millionaires - relationship it's people) }. Finally don't include any kind of other text characters.`;
+    const systemMessage = `Generate an array of JSON objects based on the most realistic and accurate information available. In cases where complete data is not available, provide the best possible estimates while ensuring the information is as precise as possible. The array must consist of exactly ${length} elements, with each element formatted as a JSON object. Each JSON object must follow this detailed structure: "key" should be a string representing the key; "value" must be a complete number, represented in full (e.g., 1000000 rather than 1M or any other abbreviation); and "units" should be a string that clearly describes the relationship (e.g., "Countries with the most millionaires - relationship is people"). It is crucial that the output strictly adheres to this format, including only the array itself and no additional text or characters, to ensure the result is precise and correctly formatted.`;
 
     const promptMessage = `${metadata1} ${comparison} ${metadata2}`;
 

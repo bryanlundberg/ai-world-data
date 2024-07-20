@@ -161,7 +161,7 @@ export default function Playground() {
                     id="show-secrets"
                     asChild
                   >
-                    <Button variant={"outline"}>Show secrets</Button>
+                    <Button variant={"outline"}>Edit</Button>
                   </DialogTrigger>
                   <DialogContent data-test="dialog-secret-keys">
                     <DialogHeader>

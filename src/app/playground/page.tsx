@@ -17,12 +17,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { nouns } from "@/data/nouns";
 import { locations } from "@/data/locations";
-import { Lock } from "lucide-react";
+import { Lock, SquareArrowOutUpRight } from "lucide-react";
 
 import useAISettings from "@/hooks/useAISettings";
 import usePromptSettings from "@/hooks/usePromptSettings";
 
-import { setKey } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -32,20 +31,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useEffect, useState } from "react";
-import { generateGoogleResponse } from "@/lib/generateGoogleResponse";
+import { generateResponse } from "@/lib/generateResponse";
 import LoadingChart from "@/components/loading-chart";
 import ChartHoldingState from "@/components/chart-holding-state";
 import { GenChart } from "@/components/gen-chart";
 import { useToast } from "@/components/ui/use-toast";
+import Link from "next/link";
+import { DataAIResponse } from "@/ts/Interfaces";
 
 export default function Playground() {
-  const { AISettings, handleChangeKey, handleChangeModel, googleProviderKey } =
+  const { AISettings, handleChangeModel, providerKeys, setProviderKeys } =
     useAISettings();
   const { promptSettings, setPromptSettings } = usePromptSettings();
 
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<DataAIResponse[]>([]);
 
-  const [isEmpty, setIsEmpty] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
@@ -80,14 +80,11 @@ export default function Playground() {
 
           <div className="flex flex-col gap-3 lg:w-96">
             <Card className="p-3 flex-1 lg:flex-none">
-              <CardDescription>IA settings</CardDescription>
+              <CardDescription>AI settings</CardDescription>
               <div className="flex flex-col gap-3 mt-3 ">
                 {/* IA model */}
                 <Label htmlFor="model">Model</Label>
-                <Select
-                  defaultValue={AISettings.model}
-                  onValueChange={(e) => handleChangeModel(e as any)}
-                >
+                <Select onValueChange={(e) => handleChangeModel(e as any)}>
                   <SelectTrigger id="model" className="w-full">
                     <SelectValue placeholder="Choose a model" />
                   </SelectTrigger>
@@ -113,6 +110,39 @@ export default function Playground() {
                         9B
                       </SelectItem>
                     </SelectGroup>
+
+                    {/* Groq */}
+                    <SelectGroup>
+                      <SelectLabel>Groq</SelectLabel>
+                      <SelectItem value={"llama3-8b-8192"}>
+                        LLaMA3 8b
+                      </SelectItem>
+                      <SelectItem value="llama3-70b-8192">
+                        LLaMA3 70b
+                      </SelectItem>
+                      <SelectItem value="mixtral-8x7b-32768">
+                        Mixtral 8x7b
+                      </SelectItem>
+                    </SelectGroup>
+
+                    {/* OpenAI */}
+                    <SelectGroup>
+                      <SelectLabel>OpenAI</SelectLabel>
+                      <SelectItem value={"gpt-3.5-turbo"} disabled>
+                        <Lock className="inline w-3 h-3 mb-1"></Lock> GPT 3.5
+                        Turbo{" "}
+                      </SelectItem>
+                      <SelectItem value="gpt-4" disabled>
+                        <Lock className="inline w-3 h-3 mb-1"></Lock> GPT 4{" "}
+                      </SelectItem>
+                      <SelectItem value="gpt-4-turbo" disabled>
+                        <Lock className="inline w-3 h-3 mb-1"></Lock> GPT 4
+                        Turbo{" "}
+                      </SelectItem>
+                      <SelectItem value="gpt-4o" disabled>
+                        <Lock className="inline w-3 h-3 mb-1"></Lock> GPT 4o
+                      </SelectItem>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
 
@@ -128,20 +158,50 @@ export default function Playground() {
                       <DialogDescription>
                         A single place to manage all your secret keys.
                       </DialogDescription>
-                      <div className="flex flex-col gap-2 py-3">
-                        <Label htmlFor="google-generative">
-                          Google generative
-                        </Label>
-                        <Input
-                          id="google-generative"
-                          placeholder="e.g 6f24710e-f770-4bed-8542-eec420759d64"
-                          defaultValue={googleProviderKey}
-                          onChange={(e) => {
-                            setKey(e.target.value, "google-generative");
-                            handleChangeKey(e.target.value);
-                          }}
-                        />
-                      </div>
+
+                      <ApiKeyProvider
+                        website="https://aistudio.google.com/app/apikey"
+                        name="Google generative"
+                        provider="google-generative"
+                        onChange={(e: any) => {
+                          window.localStorage.setItem(
+                            "google-generative",
+                            e.target.value
+                          );
+
+                          setProviderKeys((state) => ({
+                            ...state,
+                            "google-generative": e.target.value,
+                          }));
+                        }}
+                        defaultValue={providerKeys["google-generative"]}
+                      />
+                      <ApiKeyProvider
+                        website="https://console.groq.com/keys"
+                        name="Groq"
+                        provider="groq"
+                        onChange={(e: any) => {
+                          window.localStorage.setItem("groq", e.target.value);
+                          setProviderKeys((state) => ({
+                            ...state,
+                            groq: e.target.value,
+                          }));
+                        }}
+                        defaultValue={providerKeys.groq}
+                      />
+                      <ApiKeyProvider
+                        website="https://platform.openai.com/api-keys"
+                        name="OpenAI"
+                        provider="openai"
+                        onChange={(e: any) => {
+                          window.localStorage.setItem("openai", e.target.value);
+                          setProviderKeys((state) => ({
+                            ...state,
+                            openai: e.target.value,
+                          }));
+                        }}
+                        defaultValue={providerKeys.openai}
+                      />
                     </DialogHeader>
                   </DialogContent>
                 </Dialog>
@@ -255,14 +315,13 @@ export default function Playground() {
                 onClick={async () => {
                   try {
                     setIsLoading(true);
-                    const response = await generateGoogleResponse({
-                      apiKey:
-                        window.localStorage.getItem("google-generative") || "",
+                    const response = await generateResponse({
                       model: AISettings.model || "gemini-1.5-pro",
                       metadata1: promptSettings.metadata1,
                       comparison: promptSettings.comparison,
                       metadata2: promptSettings.metadata2,
                       length: promptSettings.size,
+                      provider: AISettings.provider,
                     });
 
                     if (response) {
@@ -292,6 +351,42 @@ export default function Playground() {
             </Card>
           </div>
         </div>
+      </div>
+    </>
+  );
+}
+
+function ApiKeyProvider({
+  website,
+  name,
+  placeholder = "e.g 6f24710e-f770-4bed-8542-eec420759d64",
+  provider,
+  ...rest
+}: any) {
+  return (
+    <>
+      <div className="flex flex-col gap-2 py-3">
+        <Label htmlFor={provider}>
+          {name}{" "}
+          <Link
+            className="text-blue-600 hover:text-blue-500 inline-flex items-center gap-1"
+            href={website}
+            // href="https://aistudio.google.com/app/apikey"
+            target="_blank"
+          >
+            Get API Key <SquareArrowOutUpRight size={12} />
+          </Link>
+        </Label>
+        <Input
+          id={provider}
+          placeholder={placeholder}
+          {...rest}
+          // defaultValue={googleProviderKey}
+          // onChange={(e) => {
+          //   setKey(e.target.value, "openai");
+          //   handleChangeKey(e.target.value);
+          // }}
+        />
       </div>
     </>
   );

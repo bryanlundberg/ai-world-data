@@ -4,10 +4,14 @@ import { Models } from "@/ts/Types";
 import { useEffect, useState } from "react";
 
 export default function useAISettings() {
-  const [googleProviderKey, setGoogleProviderKey] = useState("");
+  const [providerKeys, setProviderKeys] = useState({
+    "google-generative": "",
+    groq: "",
+    openai: "",
+  });
 
   const [AISettings, setAISettings] = useState<AISettings>({
-    model: "gemini-1.5-flash",
+    model: undefined,
     provider: undefined,
   });
 
@@ -23,15 +27,15 @@ export default function useAISettings() {
     });
   };
 
-  const handleChangeKey = (newKey: string) => {
-    setGoogleProviderKey(newKey);
-  };
-
   useEffect(() => {
-    setGoogleProviderKey(
-      window.localStorage.getItem("google-generative") || ""
-    );
+    setProviderKeys((state) => ({
+      "google-generative":
+        window.localStorage.getItem("google-generative") || "",
+      groq: window.localStorage.getItem("groq") || "",
+      openai: window.localStorage.getItem("openai") || "",
+    }));
   }, []);
+
   useEffect(() => {
     console.log(AISettings);
   }, [AISettings]);
@@ -39,7 +43,7 @@ export default function useAISettings() {
   return {
     AISettings,
     handleChangeModel,
-    handleChangeKey,
-    googleProviderKey,
+    setProviderKeys,
+    providerKeys,
   };
 }

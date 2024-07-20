@@ -25,3 +25,9 @@ export interface PromptSettings {
   size: string;
   ok: boolean;
 }
+
+export interface DataAIResponse {
+  key: string;
+  value: number;
+  units: string;
+}

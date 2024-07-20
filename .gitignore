@@ -1,5 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+.env
+
 # dependencies
 /node_modules
 /.pnp
@@ -35,3 +37,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 node_modules
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

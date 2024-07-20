@@ -60,6 +60,7 @@ export default function Playground() {
         <div className="border-t"></div>
         <div className="flex flex-col-reverse lg:flex-row w-full max-w-screen-xl gap-3 p-3 mx-auto">
           {/* ChartZone */}
+
           <Card className="w-full h-full">
             {/* If its loading */}
             {isLoading ? (
@@ -79,17 +80,24 @@ export default function Playground() {
           {/* Options */}
 
           <div className="flex flex-col gap-3 lg:w-96">
-            <Card className="p-3 flex-1 lg:flex-none">
+            <Card
+              className="p-3 flex-1 lg:flex-none"
+              data-test="card-ai-settings"
+            >
               <CardDescription>AI settings</CardDescription>
               <div className="flex flex-col gap-3 mt-3 ">
                 {/* IA model */}
                 <Label htmlFor="model">Model</Label>
                 <Select onValueChange={(e) => handleChangeModel(e as any)}>
-                  <SelectTrigger id="model" className="w-full">
+                  <SelectTrigger
+                    id="model"
+                    className="w-full"
+                    data-test="select-model"
+                  >
                     <SelectValue placeholder="Choose a model" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectGroup>
+                    <SelectGroup data-test="group-google-generative">
                       <SelectLabel>Google generative</SelectLabel>
                       <SelectItem value={"gemini-1.0-pro"} disabled>
                         <Lock className="inline w-3 h-3 mb-1"></Lock> Gemini 1.0
@@ -112,7 +120,7 @@ export default function Playground() {
                     </SelectGroup>
 
                     {/* Groq */}
-                    <SelectGroup>
+                    <SelectGroup data-test="group-groq">
                       <SelectLabel>Groq</SelectLabel>
                       <SelectItem value={"llama3-8b-8192"}>
                         LLaMA3 8b
@@ -126,7 +134,7 @@ export default function Playground() {
                     </SelectGroup>
 
                     {/* OpenAI */}
-                    <SelectGroup>
+                    <SelectGroup data-test="group-openai">
                       <SelectLabel>OpenAI (Experimental)</SelectLabel>
                       <SelectItem value={"gpt-3.5-turbo"}>
                         GPT 3.5 Turbo{" "}
@@ -148,10 +156,14 @@ export default function Playground() {
                 {/* Manage api keys */}
                 <Label htmlFor="show-secrets">API Keys</Label>
                 <Dialog>
-                  <DialogTrigger id="show-secrets" asChild>
+                  <DialogTrigger
+                    data-test="secrets-trigger-modal"
+                    id="show-secrets"
+                    asChild
+                  >
                     <Button variant={"outline"}>Show secrets</Button>
                   </DialogTrigger>
-                  <DialogContent>
+                  <DialogContent data-test="dialog-secret-keys">
                     <DialogHeader>
                       <DialogTitle>API Keys</DialogTitle>
                       <DialogDescription>
@@ -159,6 +171,7 @@ export default function Playground() {
                       </DialogDescription>
 
                       <ApiKeyProvider
+                        data-test={"provider-google-generative"}
                         placeholder="AIzaSyBfG-8AtDeABoEtugLuPfvp2NzWdWqn"
                         website="https://aistudio.google.com/app/apikey"
                         name="Google generative"
@@ -177,6 +190,7 @@ export default function Playground() {
                         defaultValue={providerKeys["google-generative"]}
                       />
                       <ApiKeyProvider
+                        data-test={"provider-groq"}
                         placeholder="GEb8d6SgiShJUmNJZWGdyb3FY6yIFWx1nuUguoN3e0nYyOP8Q"
                         website="https://console.groq.com/keys"
                         name="Groq"
@@ -191,6 +205,7 @@ export default function Playground() {
                         defaultValue={providerKeys.groq}
                       />
                       <ApiKeyProvider
+                        data-test={"provider-openai"}
                         placeholder="eggUbZZfru5HBTJ4uGlXT3BlbkFJKaGF4Abiokun5AmYqphn"
                         website="https://platform.openai.com/api-keys"
                         name="OpenAI"
@@ -212,7 +227,10 @@ export default function Playground() {
 
             {/* <div className="mt-3"></div> */}
 
-            <Card className="p-3 flex-1 lg:flex-none">
+            <Card
+              className="p-3 flex-1 lg:flex-none"
+              data-test="card-prompt-configuration"
+            >
               <CardDescription>Prompt configuration</CardDescription>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-3 mt-3 ">
@@ -223,7 +241,10 @@ export default function Playground() {
                       setPromptSettings((data) => ({ ...data, metadata1: e }))
                     }
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger
+                      className="w-full"
+                      data-test="select-metadata1"
+                    >
                       <SelectValue
                         id="metadata1"
                         placeholder="Choose an option"
@@ -250,7 +271,10 @@ export default function Playground() {
                     }
                     defaultValue={promptSettings.comparison}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger
+                      className="w-full"
+                      data-test="select-comparison"
+                    >
                       <SelectValue id="comparison" />
                     </SelectTrigger>
                     <SelectContent>
@@ -267,7 +291,10 @@ export default function Playground() {
                       setPromptSettings((data) => ({ ...data, metadata2: e }))
                     }
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger
+                      className="w-full"
+                      data-test="select-metadata2"
+                    >
                       <SelectValue
                         id="metadata2"
                         placeholder="Choose an option"
@@ -293,8 +320,8 @@ export default function Playground() {
                       setPromptSettings((data) => ({ ...data, size: e }))
                     }
                   >
-                    <SelectTrigger className="w-full">
-                      <SelectValue id="size" placeholder="Choose a model" />
+                    <SelectTrigger className="w-full" data-test="select-size">
+                      <SelectValue id="size" placeholder="Choose a size" />
                     </SelectTrigger>
                     <SelectContent>
                       {[5, 6, 7, 8, 9, 10, 15, 20].map((number) => {
@@ -309,10 +336,12 @@ export default function Playground() {
                 </div>
               </div>
               <Button
+                data-test="button-launch"
                 className="w-full mt-3"
                 disabled={
                   promptSettings.metadata1 === "" ||
-                  promptSettings.metadata2 === ""
+                  promptSettings.metadata2 === "" ||
+                  !AISettings.provider
                 }
                 onClick={async () => {
                   try {
@@ -361,7 +390,7 @@ export default function Playground() {
 function ApiKeyProvider({
   website,
   name,
-  placeholder = "e.g 6f24710e-f770-4bed-8542-eec420759d64",
+  placeholder,
   provider,
   ...rest
 }: any) {

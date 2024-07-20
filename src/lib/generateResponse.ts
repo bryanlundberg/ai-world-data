@@ -20,7 +20,11 @@ export async function generateResponse({
 }) {
   try {
     if (!provider) {
-      throw new Error("Not provider found");
+      throw new Error("Not provider received");
+    }
+
+    if (!model) {
+      throw new Error("Not model received");
     }
 
     const apiKey = window.localStorage.getItem(provider);

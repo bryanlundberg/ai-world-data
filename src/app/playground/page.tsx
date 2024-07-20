@@ -127,10 +127,9 @@ export default function Playground() {
 
                     {/* OpenAI */}
                     <SelectGroup>
-                      <SelectLabel>OpenAI</SelectLabel>
-                      <SelectItem value={"gpt-3.5-turbo"} disabled>
-                        <Lock className="inline w-3 h-3 mb-1"></Lock> GPT 3.5
-                        Turbo{" "}
+                      <SelectLabel>OpenAI (Experimental)</SelectLabel>
+                      <SelectItem value={"gpt-3.5-turbo"}>
+                        GPT 3.5 Turbo{" "}
                       </SelectItem>
                       <SelectItem value="gpt-4" disabled>
                         <Lock className="inline w-3 h-3 mb-1"></Lock> GPT 4{" "}
@@ -160,6 +159,7 @@ export default function Playground() {
                       </DialogDescription>
 
                       <ApiKeyProvider
+                        placeholder="AIzaSyBfG-8AtDeABoEtugLuPfvp2NzWdWqn"
                         website="https://aistudio.google.com/app/apikey"
                         name="Google generative"
                         provider="google-generative"
@@ -177,6 +177,7 @@ export default function Playground() {
                         defaultValue={providerKeys["google-generative"]}
                       />
                       <ApiKeyProvider
+                        placeholder="GEb8d6SgiShJUmNJZWGdyb3FY6yIFWx1nuUguoN3e0nYyOP8Q"
                         website="https://console.groq.com/keys"
                         name="Groq"
                         provider="groq"
@@ -190,6 +191,7 @@ export default function Playground() {
                         defaultValue={providerKeys.groq}
                       />
                       <ApiKeyProvider
+                        placeholder="eggUbZZfru5HBTJ4uGlXT3BlbkFJKaGF4Abiokun5AmYqphn"
                         website="https://platform.openai.com/api-keys"
                         name="OpenAI"
                         provider="openai"
@@ -316,7 +318,7 @@ export default function Playground() {
                   try {
                     setIsLoading(true);
                     const response = await generateResponse({
-                      model: AISettings.model || "gemini-1.5-pro",
+                      model: AISettings.model,
                       metadata1: promptSettings.metadata1,
                       comparison: promptSettings.comparison,
                       metadata2: promptSettings.metadata2,
@@ -379,7 +381,7 @@ function ApiKeyProvider({
         </Label>
         <Input
           id={provider}
-          placeholder={placeholder}
+          placeholder={"e.g " + placeholder}
           {...rest}
           // defaultValue={googleProviderKey}
           // onChange={(e) => {

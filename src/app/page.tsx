@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/navbar";
 import Slogan from "@/components/slogan";
 import { ChartHome } from "@/components/chart-home";
-import { Lightbulb } from "lucide-react";
 import Footer from "@/components/footer";
 import Link from "next/link";
 
@@ -25,7 +24,6 @@ export default function Home() {
           <Slogan />
           <div className="my-10"></div>
           <ChartHome />
-
           <Link href={"/playground"}>
             <Button>Get started</Button>
           </Link>

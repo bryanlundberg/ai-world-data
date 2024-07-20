@@ -7,37 +7,38 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 const chartData = [
-  { browser: "other", visitors: 40000, fill: "var(--color-other)" },
-  { browser: "chromes", visitors: 120000, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 90000, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 200000, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 300000, fill: "var(--color-edge)" },
+  {
+    key: "China",
+    value: 1439323776,
+    units: "people",
+  },
+  {
+    key: "India",
+    value: 1380004385,
+    units: "people",
+  },
+  {
+    key: "United States",
+    value: 331449285,
+    units: "people",
+  },
+  {
+    key: "Indonesia",
+    value: 273523615,
+    units: "people",
+  },
+  {
+    key: "Pakistan",
+    value: 216565318,
+    units: "people",
+  },
 ];
 
+chartData.sort((a, b) => a.value - b.value);
+
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
-    color: "hsl(var(--chart-2))",
-  },
-  chromes: {
-    label: "Heroku",
-    color: "hsl(var(--chart-1))",
-  },
-  safari: {
-    label: "Netlify",
-    color: "hsl(var(--chart-2))",
-  },
-  firefox: {
-    label: "Vercel",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "GitHub",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Render",
-    color: "hsl(var(--chart-5))",
+  value: {
+    label: "Monthly visitors",
   },
 };
 
@@ -64,18 +65,18 @@ export function ChartHome() {
               content={
                 <ChartTooltipContent
                   indicator="line"
-                  nameKey="visitors"
+                  nameKey="value"
                   hideLabel
                 />
               }
             />
             <Line
-              dataKey="visitors"
+              dataKey="value"
               type="natural"
-              stroke="var(--color-visitors)"
+              stroke="gray"
               strokeWidth={2}
               dot={{
-                fill: "var(--color-visitors)",
+                fill: "",
               }}
               activeDot={{
                 r: 6,
@@ -86,10 +87,7 @@ export function ChartHome() {
                 offset={12}
                 className="fill-foreground"
                 fontSize={12}
-                dataKey="browser"
-                formatter={(value: keyof typeof chartConfig) =>
-                  chartConfig[value]?.label
-                }
+                dataKey="key"
               />
             </Line>
           </LineChart>
@@ -97,7 +95,7 @@ export function ChartHome() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="leading-none text-center text-muted-foreground">
-          Project deployment popularity- Source OpenAI prompt.
+          Countries with most people in the world (Prompt Llama3-8b)
         </div>
       </CardFooter>
     </>

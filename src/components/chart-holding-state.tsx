@@ -7,21 +7,20 @@ export default function ChartHoldingState() {
         className="h-96 flex flex-col gap-3 items-center justify-center bg-transparent bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:48px_48px] glowing-effect relative"
         data-test="chart-zone-holding"
       >
-        <div
-          className="w-full h-full opacity-20 absolute rounded-md"
-          style={{
-            backgroundImage: "url(./hero.webp)",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-          }}
+        <Image
+          src={"/hero.webp"}
+          className="w-full h-full dark:opacity-20 opacity-10 absolute rounded-md"
           draggable={false}
-        ></div>
+          width={400}
+          height={200}
+          alt=""
+        />
         <Image
           src={"/vercel-logotype-dark.png"}
           alt="vercel-logotype-dark"
           width={500}
           height={200}
-          className="px-3 dark:invert select-none"
+          className="px-3 dark:invert select-none z-10 "
           draggable={false}
           data-test="logotype vercel"
         />

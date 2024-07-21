@@ -129,13 +129,13 @@ export default function Playground() {
                         LLaMA3 70b
                       </SelectItem>
                       <SelectItem value="mixtral-8x7b-32768">
-                        Mixtral 8x7b
+                        Mixtral 8x7b (Best)
                       </SelectItem>
                     </SelectGroup>
 
                     {/* OpenAI */}
                     <SelectGroup data-test="group-openai">
-                      <SelectLabel>OpenAI (Experimental)</SelectLabel>
+                      <SelectLabel>OpenAI</SelectLabel>
                       <SelectItem value={"gpt-3.5-turbo"}>
                         GPT 3.5 Turbo{" "}
                       </SelectItem>

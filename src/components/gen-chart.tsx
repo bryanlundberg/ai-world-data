@@ -39,7 +39,7 @@ import { useState } from "react";
 interface data {
   key: string;
   value: number;
-  units?: string;
+  units: string;
 }
 
 export function GenChart({
@@ -59,9 +59,12 @@ export function GenChart({
 }) {
   const [config, setConfig] = useState({
     hideXAxis: true,
-    hideYAxis: false,
+    hideYAxis: true,
     labels: false,
+    values: false,
   });
+
+  chartConfigs.value.label = data[0].units || "#";
 
   return (
     <>
@@ -84,6 +87,7 @@ export function GenChart({
               layout="vertical"
               margin={{
                 left: 0,
+                right: 50,
               }}
             >
               <CartesianGrid horizontal={false} />
@@ -108,6 +112,15 @@ export function GenChart({
                     position="insideLeft"
                     offset={8}
                     className="fill-[--color-label]"
+                    fontSize={12}
+                  />
+                )}
+                {config.values && (
+                  <LabelList
+                    dataKey="value"
+                    position="right"
+                    offset={8}
+                    className="gray"
                     fontSize={12}
                   />
                 )}
@@ -176,6 +189,18 @@ export function GenChart({
               id="show-labels"
               title="Show labels"
               description="Display the names inside the bars."
+            />
+            <CheckboxChartOption
+              onClick={() =>
+                setConfig((config) => ({
+                  ...config,
+                  values: !config.values,
+                }))
+              }
+              defaultChecked={config.values}
+              id="show-values"
+              title="Show values"
+              description="Display the values at the right of the bars."
             />
           </div>
         </CardContent>

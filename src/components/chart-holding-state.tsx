@@ -25,7 +25,7 @@ export default function ChartHoldingState() {
           data-test="logotype vercel"
         /> */}
         <h2 className="scroll-m-20 text-3xl font-extrabold tracking-tight lg:text-5xl">
-          Explore your curiosity
+          Release your curiosity
         </h2>
         <h3 className="scroll-m-20 text-xl font-bold tracking-tight lg:text-3xl italic">
           &quot;Discover the world around you&quot;

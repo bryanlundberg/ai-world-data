@@ -31,3 +31,15 @@ export interface DataAIResponse {
   value: number;
   units: string;
 }
+
+export interface CategoryItem {
+  key: string;
+  name: string;
+}
+
+export interface Categories<T> {
+  Common: T[];
+  Professions: T[];
+  Species: T[];
+  Places: T[];
+}

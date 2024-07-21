@@ -15,7 +15,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { nouns } from "@/data/nouns";
+import { CATEGORIES } from "@/data/nouns";
 import { locations } from "@/data/locations";
 import { Lock, SquareArrowOutUpRight } from "lucide-react";
 
@@ -37,7 +37,7 @@ import ChartHoldingState from "@/components/chart-holding-state";
 import { GenChart } from "@/components/gen-chart";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
-import { DataAIResponse } from "@/ts/Interfaces";
+import { Categories, CategoryItem, DataAIResponse } from "@/ts/Interfaces";
 
 export default function Playground() {
   const { AISettings, handleChangeModel, providerKeys, setProviderKeys } =
@@ -301,18 +301,22 @@ export default function Playground() {
                       />
                     </SelectTrigger>
                     <SelectContent>
-                      {nouns.map((noun) => {
-                        return (
-                          <SelectItem value={noun.key} key={noun.key}>
-                            {noun.name}
-                          </SelectItem>
-                        );
-                      })}
+                      {Object.keys(CATEGORIES).map((category) => (
+                        <SelectGroup key={category}>
+                          <SelectLabel>{category}</SelectLabel>
+                          {CATEGORIES[
+                            category as keyof Categories<CategoryItem>
+                          ].map((item) => (
+                            <SelectItem value={item.key} key={item.key}>
+                              {item.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-3">
-                  {" "}
                   <Label htmlFor="">Dataset size:</Label>
                   <Select
                     defaultValue={promptSettings.size}

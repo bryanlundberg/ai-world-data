@@ -10,7 +10,7 @@ export default function Navbar() {
   const router = useRouter();
   return (
     <>
-      <nav className="flex justify-between w-full px-3 py-3 mx-auto mb-3 max-w-screen-2xl">
+      <nav className="flex justify-between w-full px-3 py-3 mx-auto mb-3 max-w-screen-2xl sticky top-0 left-0 backdrop-blur-xl">
         <Logo />
 
         <div className="flex items-center gap-3">
@@ -19,7 +19,7 @@ export default function Navbar() {
               onClick={() => router.push("/playground")}
               disabled={pathname === "/playground"}
             >
-              Playground
+              Launch app
             </Button>
           )}
 

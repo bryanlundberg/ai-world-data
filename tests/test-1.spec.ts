@@ -6,7 +6,7 @@ const secret = process.env.SECRETTESTING as string;
 test.describe.configure({ mode: "parallel" });
 
 test.describe("Overall features inside playground without AI needs", () => {
-  test("should render the chart section in a holding state, ai settings section, prompt section", async ({
+  test("should render the chart section in a holding state, AI settings section, and prompt section", async ({
     page,
   }) => {
     await page.goto(url);
@@ -19,7 +19,9 @@ test.describe("Overall features inside playground without AI needs", () => {
     ).toBeVisible();
   });
 
-  test("should verify secret keys modal open / closes", async ({ page }) => {
+  test("should verify the secret keys modal opens and closes correctly", async ({
+    page,
+  }) => {
     await page.goto(url);
     await expect(
       page.locator('[data-test="secrets-trigger-modal"]')
@@ -46,7 +48,7 @@ test.describe("Overall features inside playground without AI needs", () => {
     await expect(page.locator('[data-test="dialog-secret-keys"]')).toBeHidden();
   });
 
-  test("should allow open/close and show the models providers list on ai-settings", async ({
+  test("should allow open/close and show the model providers list in AI settings", async ({
     page,
   }) => {
     await page.goto(url);
@@ -58,7 +60,7 @@ test.describe("Overall features inside playground without AI needs", () => {
     await page.locator("html").click();
   });
 
-  test("Should launch button keep disabled until select a model", async ({
+  test("should keep the generate button disabled until a model is selected even after change prompt settings", async ({
     page,
   }) => {
     // Manipulate prompt settings
@@ -83,7 +85,7 @@ test.describe("Overall features inside playground without AI needs", () => {
     await expect(page.locator('[data-test="button-launch"]')).toBeDisabled();
   });
 
-  test("Should change button-launch visibility after choose a model", async ({
+  test("should enable the generate button after a model is selected and prompt settings are selected", async ({
     page,
   }) => {
     // Manipulate prompt options
@@ -116,8 +118,10 @@ test.describe("Overall features inside playground without AI needs", () => {
   });
 });
 
-test.describe("Should do a full execution entering google-generative API Key, select the model, customize the prompt options", () => {
-  test("Should wait chart render successfully", async ({ page }) => {
+test.describe("Full execution flow with Google Generative API Key", () => {
+  test("should successfully execute the flow and render the chart", async ({
+    page,
+  }) => {
     await page.goto(url);
 
     // Open modal

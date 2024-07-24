@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CATEGORIES } from "@/data/nouns";
 import { locations } from "@/data/locations";
-import { Lock, SquareArrowOutUpRight } from "lucide-react";
+import { Lock, SquareArrowOutUpRight, WandSparkles } from "lucide-react";
 
 import useAISettings from "@/hooks/useAISettings";
 import usePromptSettings from "@/hooks/usePromptSettings";
@@ -341,7 +341,7 @@ export default function Playground() {
               </div>
               <Button
                 data-test="button-launch"
-                className="w-full mt-3"
+                className="w-full mt-3 flex items-center justify-center gap-2"
                 disabled={
                   promptSettings.metadata1 === "" ||
                   promptSettings.metadata2 === "" ||
@@ -381,7 +381,7 @@ export default function Playground() {
                   }
                 }}
               >
-                Launch
+                <WandSparkles className="w-4 h-4" /> Generate
               </Button>
             </Card>
           </div>

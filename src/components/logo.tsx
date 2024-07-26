@@ -22,7 +22,7 @@ export default function Logo() {
                 alt=""
                 width={20}
                 height={20}
-                className="inline-block w-4 h-4 mb-1 select-none"
+                className="inline-block w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 mb-1 select-none"
                 draggable={false}
               />
               <span>RLD</span>
